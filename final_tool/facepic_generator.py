@@ -82,18 +82,23 @@ def get_players_from_csv(players_csv_path, player_pics_paths):
     players_list = []
 
     with open(players_csv_path, newline='', encoding='ISO-8859-1', errors='ignore') as players_csv:
-        players = csv.reader(players_csv, delimiter=',')
+        players = csv.reader(players_csv, delimiter=';')
         for player in players:
-            if player[8].lower() == 'player' or player[8].lower() == 'player/non-player':
-                filename = player[1] + '_' + player[2] + '_' + player[3].replace('.', '_') + '.png'
-                dob = datetime.datetime.strptime(player[3], '%d.%m.%Y')
-                players_list.append((filename, dob))
-                for path in player_pics_paths:
-                    if os.path.isfile(os.path.join(path, filename)):
-                        try:
-                            players_list.remove(filename)
-                        except:
-                            continue
+            if player[0] == 'Id':
+                continue
+            filename = player[1].replace(' ', '_') + datetime.datetime.strptime(player[3], '%m/%d/%Y').strftime('%d_%m_%Y') + '.png'
+            dob = datetime.datetime.strptime(player[3], '%m/%d/%Y')
+            players_list.append((filename, dob))
+            # if player[8].lower() == 'player' or player[8].lower() == 'player/non-player':
+            #     filename = player[1] + '_' + player[2] + '_' + player[3].replace('.', '_') + '.png'
+            #     dob = datetime.datetime.strptime(player[3], '%d.%m.%Y')
+            #     players_list.append((filename, dob))
+            #     for path in player_pics_paths:
+            #         if os.path.isfile(os.path.join(path, filename)):
+            #             try:
+            #                 players_list.remove(filename)
+            #             except:
+            #                 continue
 
     return players_list
 
