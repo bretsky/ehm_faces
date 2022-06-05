@@ -86,7 +86,7 @@ def get_players_from_csv(players_csv_path, player_pics_paths):
         for player in players:
             if player[0] == 'Id':
                 continue
-            filename = player[1].replace(' ', '_') + datetime.datetime.strptime(player[3], '%m/%d/%Y').strftime('%d_%m_%Y') + '.png'
+            filename = player[1].replace(' ', '_') + datetime.datetime.strptime(player[3], '%m/%d/%Y').strftime('_%d_%m_%Y') + '.png'
             dob = datetime.datetime.strptime(player[3], '%m/%d/%Y')
             players_list.append((filename, dob))
             # if player[8].lower() == 'player' or player[8].lower() == 'player/non-player':
